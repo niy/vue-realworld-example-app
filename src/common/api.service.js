@@ -82,6 +82,19 @@ export const ArticlesService = {
   }
 }
 
+export const VideosService = {
+  post (slug, videoFile) {
+    let formData = new FormData()
+    formData.append('video', videoFile)
+    return ApiService.post(
+      `articles/${slug}/video`, formData)
+  },
+  destroy (slug) {
+    return ApiService
+      .delete(`articles/${slug}/video`)
+  }
+}
+
 export const CommentsService = {
   get (slug) {
     if (typeof slug !== 'string') {

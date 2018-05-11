@@ -18,6 +18,7 @@
   "dependencies": {
     "axios": "^0.16.2",
     "date-fns": "^1.29.0",
+    "hls.js": "^0.9.1",
     "marked": "^0.3.17",
     "vue": "^2.5.8",
     "vue-axios": "^2.0.2",

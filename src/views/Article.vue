@@ -22,6 +22,7 @@
           </ul>
         </div>
       </div>
+      <RmvVideoPlayer :video="article.video" v-if="article.video"></RmvVideoPlayer>
       <hr/>
       <div class="article-actions">
         <RwvArticleMeta
@@ -63,6 +64,7 @@
   import RwvCommentEditor from '@/components/CommentEditor'
   import RwvTag from '@/components/VTag'
   import { FETCH_ARTICLE, FETCH_COMMENTS } from '@/store/actions.type'
+  import RmvVideoPlayer from '@/components/VideoPlayer'
 
   export default {
     name: 'rwv-article',
@@ -76,7 +78,8 @@
       RwvArticleMeta,
       RwvComment,
       RwvCommentEditor,
-      RwvTag
+      RwvTag,
+      RmvVideoPlayer
     },
     beforeRouteEnter (to, from, next) {
       Promise.all([

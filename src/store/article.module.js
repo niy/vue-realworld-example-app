@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import { ArticlesService, CommentsService, FavoriteService } from '@/common/api.service'
+import { ArticlesService, CommentsService, FavoriteService, VideosService } from '@/common/api.service'
 import {
   FETCH_ARTICLE,
   FETCH_COMMENTS,
@@ -12,12 +12,15 @@ import {
   ARTICLE_EDIT_ADD_TAG,
   ARTICLE_EDIT_REMOVE_TAG,
   ARTICLE_DELETE,
-  ARTICLE_RESET_STATE
+  ARTICLE_RESET_STATE,
+  ARTICLE_POST_VIDEO,
+  ARTICLE_DELETE_VIDEO
 } from './actions.type'
 import {
   RESET_STATE,
   SET_ARTICLE,
   SET_COMMENTS,
+  SET_VIDEO,
   TAG_ADD,
   TAG_REMOVE,
   UPDATE_ARTICLE_IN_LIST
@@ -29,7 +32,8 @@ const initialState = {
     title: '',
     description: '',
     body: '',
-    tagList: []
+    tagList: [],
+    video: {}
   },
   comments: []
 }
@@ -109,6 +113,12 @@ export const actions = {
   },
   [ARTICLE_RESET_STATE] ({ commit }) {
     commit(RESET_STATE)
+  },
+  [ARTICLE_POST_VIDEO] (context, data) {
+    return VideosService.post(data.slug, data.videoFile)
+  },
+  [ARTICLE_DELETE_VIDEO] (context, slug) {
+    return VideosService.destroy(slug)
   }
 }
 
@@ -119,6 +129,9 @@ export const mutations = {
   },
   [SET_COMMENTS] (state, comments) {
     state.comments = comments
+  },
+  [SET_VIDEO] (state, video) {
+    state.article.video = video
   },
   [TAG_ADD] (state, tag) {
     state.article.tagList = state.article.tagList.concat([tag])
