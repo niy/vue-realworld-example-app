@@ -1,8 +1,8 @@
 <template>
   <div class="video-player-container">
-    <p v-if="video.upload_status === 'uploaded'">Video will be ready within few minutes...</p>
-    <p v-if="video.upload_status === 'failed'" class="text-danger">Video failed to convert. Please try another one.</p>
-    <video v-if="video.upload_status === 'converted'" class="video-player"
+    <p v-if="videoStatus === 'uploaded'">Video will be ready within few minutes...</p>
+    <p v-if="videoStatus === 'failed'" class="text-danger">Video failed to convert. Please try another one.</p>
+    <video v-if="videoStatus === 'converted'" class="video-player"
            ref="videoPlayer" controls="controls"
            preload="metadata" v-bind:poster="video.thumbnail_url"></video>
   </div>
@@ -20,6 +20,18 @@
     },
     beforeDestroy () {
       clearInterval(this.checkVideoInterval)
+    },
+    computed: {
+      videoStatus: function () {
+        return this.video.upload_status
+      }
+    },
+    watch: {
+      videoStatus: function (val) {
+        if (val === 'converted') {
+          this.loadVideo()
+        }
+      }
     },
     methods: {
       init () {
